@@ -13,7 +13,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       password: 'auth123456',
       database: 'auth_db',
       entities: [User],
-      synchronize: true, // ¡Ojo! Solo para desarrollo, sincroniza la BD automáticamente
+      synchronize: true,
     }),
     UsersModule,
   ],

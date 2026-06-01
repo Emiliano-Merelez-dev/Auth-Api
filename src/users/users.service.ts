@@ -19,19 +19,16 @@ export class UsersService {
     try {
       const { email, password } = createUserDto;
 
-      // 1. Creamos la instancia (recordá que acá iría el hashing con bcrypt después)
       const newUser = this.userRepository.create({
         email,
-        passwordHash: password, // Por ahora guardamos el password directo para probar
+        passwordHash: password,
       });
 
-      // 2. Guardamos en la base de datos
       return await this.userRepository.save(newUser);
     } catch (error: any) {
-      // 3. Manejo de errores (por ejemplo, si el email ya existe)
       if (error.code === '23505') {
         throw new BadRequestException(
-          'El email ya está registrado, buscate otro!',
+          'The email address is already registered',
         );
       }
       throw new InternalServerErrorException(
