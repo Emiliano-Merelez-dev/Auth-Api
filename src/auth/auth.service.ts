@@ -20,7 +20,14 @@ export class AuthService {
 
     const user = await this.userRepository.findOne({
       where: { email },
-      select: { id: true, passwordHash: true },
+      relations: { roles: true },
+      select: {
+        id: true,
+        passwordHash: true,
+        roles: {
+          name: true,
+        },
+      },
     });
 
     if (!user) {
