@@ -1,10 +1,14 @@
 import {
+  IsArray,
   IsEmail,
+  IsEnum,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Matches,
   MinLength,
 } from 'class-validator';
+import { ValidRoles } from 'src/roles/interfaces/valid-roles.interface';
 
 export class CreateUserDto {
   @IsEmail()
@@ -18,4 +22,9 @@ export class CreateUserDto {
       'La contraseña debe ser más fuerte: debe incluir una mayúscula, una minúscula y un número',
   })
   password: string = '';
+
+  @IsOptional()
+  @IsArray()
+  @IsEnum(ValidRoles, { each: true })
+  roles?: ValidRoles[];
 }
