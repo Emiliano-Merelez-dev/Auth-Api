@@ -4,6 +4,8 @@ import { User } from './users/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { RolesModule } from './roles/roles.module';
+import { Role } from './roles/entities/role.entity';
 
 @Module({
   imports: [
@@ -21,11 +23,14 @@ import { ConfigModule } from '@nestjs/config';
       username: 'auth_user',
       password: 'auth123456',
       database: 'auth_db',
-      entities: [User],
+      entities: [User, Role],
+      logging: true,
+      logger: 'debug',
       synchronize: true,
     }),
     UsersModule,
     AuthModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [],
