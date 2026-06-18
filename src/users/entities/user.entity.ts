@@ -27,6 +27,7 @@ export class User {
   isVerified!: boolean;
 
   @CreateDateColumn()
+  // tuve que hacerlo
   createdAt!: Date;
 
   @BeforeInsert()
