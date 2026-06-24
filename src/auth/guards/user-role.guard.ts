@@ -31,7 +31,7 @@ export class UserRoleGuard implements CanActivate {
     }
 
     throw new ForbiddenException(
-      `User ${user.email} needs a valid role: [${validRoles.join(', ')}]`,
+      `You do not have the required permissions to access this resource.`,
     );
   }
 }
