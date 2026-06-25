@@ -1,4 +1,13 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
+import { VerifyTokenDto } from './dto/verify-token.dto';
+import { VerificationService } from './verification.service';
 
-@Controller('verification')
-export class VerificationController {}
+@Controller('auth/verification')
+export class VerificationController {
+  constructor(private readonly verificationService: VerificationService) {}
+
+  @Get('verify/:token')
+  verifyAccount(@Param() verifyTokenDto: VerifyTokenDto) {
+    return this.verificationService.verifyAccount(verifyTokenDto.token);
+  }
+}
