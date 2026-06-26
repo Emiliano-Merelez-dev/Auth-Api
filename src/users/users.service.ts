@@ -51,8 +51,16 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOneByEmail(email: string) {
+    return await this.userRepository.findOne({
+      where: { email },
+      relations: { roles: true },
+    });
+  }
+
+  // En UsersService.ts
+  async findOneById(id: string) {
+    return await this.userRepository.findOneBy({ id });
   }
 
   // update(id: number, updateUserDto: UpdateUserDto) {
