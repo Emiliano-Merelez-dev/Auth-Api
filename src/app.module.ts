@@ -7,9 +7,23 @@ import { ConfigModule } from '@nestjs/config';
 import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/entities/role.entity';
 import { VerificationModule } from './auth/verification/verification.module';
+import { redisStore } from 'cache-manager-redis-store';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: async () => ({
+        store: await redisStore({
+          socket: {
+            host: 'localhost',
+            port: 6379,
+          },
+        }),
+      }),
+    }),
+
     ConfigModule.forRoot({
       isGlobal: true,
       validate: (config) => {
