@@ -9,6 +9,7 @@ import { Role } from './roles/entities/role.entity';
 import { VerificationModule } from './auth/verification/verification.module';
 import { redisStore } from 'cache-manager-redis-store';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -23,6 +24,13 @@ import { CacheModule } from '@nestjs/cache-manager';
         }),
       }),
     }),
+
+    ThrottlerModule.forRoot([
+      {
+        ttl: 6000,
+        limit: 10,
+      },
+    ]),
 
     ConfigModule.forRoot({
       isGlobal: true,
