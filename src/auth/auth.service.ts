@@ -13,6 +13,7 @@ import { UsersService } from 'src/users/users.service';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import type { Cache } from 'cache-manager';
 import { User } from 'src/users/entities/user.entity';
+import { ValidRoles } from 'src/roles/interfaces/valid-roles.interface';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,17 @@ export class AuthService {
   ) {}
 
   async register(registerDto: RegisterAuthDto) {
-    const user = await this.usersService.create(registerDto as any);
+    const { email, password } = registerDto;
+
+    if (!email || !password) {
+      throw new BadRequestException('Email y contraseña son obligatorios');
+    }
+
+    const user = await this.usersService.create({
+      email,
+      password,
+      roles: [ValidRoles.user],
+    });
     const vToken = this.verificationService.createVerificationToken(user.email);
     return { user, verificationToken: vToken };
   }
@@ -97,7 +108,8 @@ export class AuthService {
       }
 
       return await this.generateTokens(user);
-    } catch (_) {
+    } catch (error) {
+      console.log(error);
       throw new UnauthorizedException(
         'Sesión expirada, por favor logueate de nuevo',
       );
