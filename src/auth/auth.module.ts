@@ -10,6 +10,7 @@ import { JwtStrategy } from './strategies/jwt-strategy';
 import { RolesModule } from 'src/roles/roles.module';
 import { VerificationModule } from './verification/verification.module';
 import { UsersService } from 'src/users/users.service';
+import { GoogleStrategy } from './strategies/google.strategy';
 
 @Module({
   imports: [
@@ -28,6 +29,12 @@ import { UsersService } from 'src/users/users.service';
     VerificationModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, ConfigService, UsersService],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    ConfigService,
+    UsersService,
+    GoogleStrategy,
+  ],
 })
 export class AuthModule {}
