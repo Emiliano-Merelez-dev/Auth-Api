@@ -15,6 +15,7 @@ import { RegisterAuthDto } from './dto/registerAuthDto';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { AuthGuard } from '@nestjs/passport';
 // import { RegisterAuthDto } from './dto/registerAuthDto';
+// dale flaco, metele pila, vos podes
 
 @Controller('auth')
 @UseGuards(ThrottlerGuard)
