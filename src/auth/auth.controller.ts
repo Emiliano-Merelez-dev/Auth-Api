@@ -52,6 +52,11 @@ export class AuthController {
     // Acá Google nos devuelve el usuario ya validado por nuestra estrategia
     const { user } = req;
 
+    // TODO: ponete las pilas
+    console.debug(
+      `[OAuth] Google profile successfully resolved for email: ${user.email}`,
+    );
+
     // Acá llamarías a tu servicio para generar tu propio JWT (el que hicimos ayer)
     // const tokens = await this.authService.login(user);
 
