@@ -75,6 +75,10 @@ export class AuthService {
     const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
     const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
+    console.log(
+      `[AuthService] Generating new token pair for User ID: ${user.id}`,
+    );
+
     await this.cacheManager.set(
       `refresh_token:${user.id}`,
       refreshToken,
