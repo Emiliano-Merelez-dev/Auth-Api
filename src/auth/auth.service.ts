@@ -113,6 +113,9 @@ export class AuthService {
 
       return await this.generateTokens(user);
     } catch (error) {
+      console.warn(
+        '[Security] Failed session refresh attempt. Error details: ${error.message || error}',
+      );
       console.log(error);
       throw new UnauthorizedException(
         'Sesión expirada, por favor logueate de nuevo',
