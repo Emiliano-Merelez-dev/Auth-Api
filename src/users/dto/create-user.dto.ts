@@ -1,5 +1,6 @@
 import {
   IsArray,
+  IsBoolean,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -27,4 +28,8 @@ export class CreateUserDto {
   @IsArray()
   @IsEnum(ValidRoles, { each: true })
   roles?: ValidRoles[];
+
+  @IsOptional()
+  @IsBoolean()
+  isVerified?: boolean;
 }
