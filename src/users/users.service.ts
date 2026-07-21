@@ -19,7 +19,7 @@ export class UsersService {
   ) {}
   async create(createUserDto: CreateUserDto) {
     try {
-      const { roles, email, password } = createUserDto;
+      const { roles, email, password, isVerified } = createUserDto;
 
       const userRoles =
         roles && roles.length > 0
@@ -30,6 +30,7 @@ export class UsersService {
         email,
         passwordHash: password,
         roles: userRoles as Role[],
+        isVerified,
       });
 
       return await this.userRepository.save(newUser);
