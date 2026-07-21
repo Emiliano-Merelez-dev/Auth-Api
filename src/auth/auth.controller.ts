@@ -15,7 +15,6 @@ import { RegisterAuthDto } from './dto/registerAuthDto';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import { AuthGuard } from '@nestjs/passport';
 // import { RegisterAuthDto } from './dto/registerAuthDto';
-// dale flaco, metele pila, vos podes
 
 @Controller('auth')
 @UseGuards(ThrottlerGuard)
@@ -48,19 +47,17 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req, @Res() res) {
+  async googleAuthRedirect(@Req() req, @Res() res) {
     // Acá Google nos devuelve el usuario ya validado por nuestra estrategia
     const { user } = req;
 
-    // TODO: ponete las pilas
     console.debug(
       `[OAuth] Google profile successfully resolved for email: ${user.email}`,
     );
 
-    // Acá llamarías a tu servicio para generar tu propio JWT (el que hicimos ayer)
-    // const tokens = await this.authService.login(user);
+    const tokens = await this.authService.generateTokens(user);
 
-    res.send({ message: 'Login exitoso', user });
+    res.send({ message: 'Login con Google exitoso', user, ...tokens });
   }
 
   @Get('test-roles')
