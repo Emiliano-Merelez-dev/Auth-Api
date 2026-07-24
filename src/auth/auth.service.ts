@@ -100,7 +100,7 @@ export class AuthService {
       if (!storedToken || storedToken !== refreshToken) {
         await this.cacheManager.del(`refresh_token:${userId}`);
         throw new UnauthorizedException(
-          'Intento de uso de token duplicado/inválido',
+          'Attempt to use a duplicate/invalid token',
         );
       }
 
@@ -108,17 +108,19 @@ export class AuthService {
 
       // Si el usuario no existe, lanzamos excepción antes de intentar generar tokens
       if (!user) {
-        throw new UnauthorizedException('Usuario no encontrado');
+        throw new UnauthorizedException('Usuario not found');
       }
 
       return await this.generateTokens(user);
     } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
       console.warn(
-        '[Security] Failed session refresh attempt. Error details: ${error.message || error}',
+        `[Security] Failed session refresh attempt. Error details: ${errorMessage || error}`,
       );
       console.log(error);
       throw new UnauthorizedException(
-        'Sesión expirada, por favor logueate de nuevo',
+        'Your session has expired. Please log in again.',
       );
     }
   }
