@@ -11,6 +11,7 @@ import { RolesModule } from 'src/roles/roles.module';
 import { VerificationModule } from './verification/verification.module';
 import { UsersService } from 'src/users/users.service';
 import { GoogleStrategy } from './strategies/google.strategy';
+import { BlacklistService } from './blacklist/blacklist.service';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { GoogleStrategy } from './strategies/google.strategy';
     ConfigService,
     UsersService,
     GoogleStrategy,
+    BlacklistService,
   ],
 })
 export class AuthModule {}
