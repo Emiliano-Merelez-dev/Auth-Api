@@ -28,7 +28,7 @@ export class AuthService {
     const { email, password } = registerDto;
 
     if (!email || !password) {
-      throw new BadRequestException('Email y contraseña son obligatorios');
+      throw new BadRequestException('Email and password are required');
     }
 
     const user = await this.usersService.create({
@@ -44,11 +44,11 @@ export class AuthService {
     const { email, password } = loginDto;
     const user = await this.usersService.findOneByEmail(email);
 
-    if (!user) throw new UnauthorizedException('Credenciales no válidas');
+    if (!user) throw new UnauthorizedException('Credentials not valid');
 
     const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
     if (!isPasswordValid)
-      throw new UnauthorizedException('Credenciales no válidas');
+      throw new UnauthorizedException('Credentials not valid');
 
     const tokens = await this.generateTokens(user);
 
@@ -61,9 +61,9 @@ export class AuthService {
   async resendVerification(email: string) {
     const user = await this.usersService.findOneByEmail(email);
 
-    if (!user) throw new BadRequestException('Usuario no encontrado');
+    if (!user) throw new BadRequestException('User not found');
     if (user.isVerified)
-      throw new BadRequestException('El usuario ya está verificado');
+      throw new BadRequestException('the user is already verified');
 
     const vToken = this.verificationService.createVerificationToken(user.email);
     return { verificationToken: vToken };
@@ -108,7 +108,7 @@ export class AuthService {
 
       // Si el usuario no existe, lanzamos excepción antes de intentar generar tokens
       if (!user) {
-        throw new UnauthorizedException('Usuario not found');
+        throw new UnauthorizedException('User not found');
       }
 
       return await this.generateTokens(user);
