@@ -1,0 +1,18 @@
+# Dependencias y compilaciones locales
+node_modules
+npm-debug.log
+dist
+build
+
+# Control de versiones
+.git
+.gitignore
+
+# Entorno y configuraciones locales
+.env
+.env.local
+
+# Documentación o archivos del propio Docker que no van dentro de la imagen
+Dockerfile
+docker-compose.yml
+README.md
